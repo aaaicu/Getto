@@ -11,7 +11,7 @@ COPY src src
 RUN chmod +x ./gradlew
 RUN ./gradlew bootjar
 
-WORKDIR /build
+WORKDIR /build/libs
 
 RUN ls -al
 
