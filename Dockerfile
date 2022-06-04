@@ -14,8 +14,7 @@ RUN ./gradlew bootjar
 
 WORKDIR /build/libs
 
-FROM openjdk:17
-COPY --from=builder build/libs/*.jar /getto.jar
+COPY build/libs/*.jar /tmp/getto.jar
 
 
 # gradlew 에 실행권한을 부여하고 프로젝트를 jar 형식의 파일로 빌드합니다.
