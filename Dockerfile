@@ -15,7 +15,7 @@ WORKDIR /build/libs
 
 CMD ["/bin/ls", "-al"]
 
-#COPY getto-0.0.1-SNAPSHOT.jar /getto.jar
+COPY getto-0.0.1-SNAPSHOT.jar /getto.jar
 
 
 # gradlew 에 실행권한을 부여하고 프로젝트를 jar 형식의 파일로 빌드합니다.
