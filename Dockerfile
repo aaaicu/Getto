@@ -9,11 +9,11 @@ COPY src src
 # Spring Boot 프로젝트 내의 gradle 설정 파일과 소스코드를 이미지로 가져옵니다.
 
 RUN chmod +x ./gradlew
-RUN ./gradlew clean bootjar
+RUN ./gradlew bootjar
 
 WORKDIR /build/libs
 
-RUN ls -al
+RUN ls
 
 #COPY getto-0.0.1-SNAPSHOT.jar /getto.jar
 
