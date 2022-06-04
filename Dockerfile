@@ -13,7 +13,7 @@ RUN ./gradlew bootjar
 
 WORKDIR /build/libs
 
-RUN ls
+CMD ["/bin/ls", "-al"]
 
 #COPY getto-0.0.1-SNAPSHOT.jar /getto.jar
 
