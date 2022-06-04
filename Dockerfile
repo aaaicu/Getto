@@ -10,14 +10,17 @@ COPY src src
 
 RUN chmod +x ./gradlew
 RUN ./gradlew bootjar
+
+RUN cd build
+
+RUN ls
 # gradlew 에 실행권한을 부여하고 프로젝트를 jar 형식의 파일로 빌드합니다.
 #
 #COPY build/libs/*.jar getto.jar
-COPY --from=builder build/libs/*.jar getto.jar
-
-RUN ["ls"]
-
-RUN ["cp", ".*.jar", "/getto.jar"]
+#COPY --from=builder build/libs/*.jar getto.jar
+#
+#RUN ["ls"]
+#COPY --from=builder build/libs/*.jar getto.jar
 
 #FROM openjdk:17
 # 위에서 빌드한 jar 파일을 실행해 주기 위해 다시 JDK 1.8 버전을 베이스로 설정합니다.
