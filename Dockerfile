@@ -11,7 +11,7 @@ RUN chmod +x ./gradlew
 RUN ./gradlew bootjar
 
 #WORKDIR /build/libs
-
+#
 #FROM openjdk:17
 #COPY --from=builder build/libs/*.jar /getto.jar
 
