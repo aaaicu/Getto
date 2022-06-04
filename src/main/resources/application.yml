@@ -1,3 +1,5 @@
+server:
+  port: 9099
 spring:
   datasource:
     url: ENC(wi6yFg2Zwe0qzft9vToYXQOEEcg4UuZX6v/hlJEF1fWNmVB+0AvhL7cXUc27urBvw4+L2mrKWRw/na4d1Bwa/4OQqCGzFhcuR8VTZZQ0LqePVxhJiGXlxA==)
