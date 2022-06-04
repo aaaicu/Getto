@@ -2,7 +2,7 @@ server:
   port: 9099
 spring:
   datasource:
-    url: ENC(O6Zpv7xytn9GHODwtTcxc7ClRGjo62p81sb5LbglTkq3xHrkWFlshYhGghNzZPNDEMY2X5dgayHzb8X6qI/JwZRsGnSvBTYhoiSKMS2fWseJgRLUiRXKaA==)
+    url: ENC(ip5pQuH0CoxuB3WCVp9PDNtYqtZfiUuaMZKtAA+LP9sKH4JlyRAANVrAitzoNDfP+OTz/2BsYWbkTEm8p900JZO2ABTgHASJDgPJSoBCAeOLHOgRcpoxKg==)
     driver-class-name : oracle.jdbc.OracleDriver
     username: ENC(0J2OycehFY3bZaofp1ikEw==)
     password: ENC(vL2XAsX7VVd6zPvsPJhPFmqYOzAE5jW6)
