@@ -1,5 +1,6 @@
 FROM openjdk:17 as builder
 # JDK 1.8 버전을 베이스로 설정한 후 builder로 alias 처리합니다.
+VOLUME /tmp
 
 COPY gradlew .
 COPY gradle gradle
@@ -15,7 +16,7 @@ WORKDIR /build/libs
 
 FROM openjdk:17
 COPY --from=builder build/libs/*.jar /getto.jar
-VOLUME /tmp
+
 
 # gradlew 에 실행권한을 부여하고 프로젝트를 jar 형식의 파일로 빌드합니다.
 #
