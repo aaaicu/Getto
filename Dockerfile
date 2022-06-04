@@ -11,9 +11,10 @@ COPY src src
 RUN chmod +x ./gradlew
 RUN ./gradlew bootjar
 
-RUN cd build
+WORKDIR /build
 
-RUN ls
+RUN ls -al
+
 # gradlew 에 실행권한을 부여하고 프로젝트를 jar 형식의 파일로 빌드합니다.
 #
 #COPY build/libs/*.jar getto.jar
