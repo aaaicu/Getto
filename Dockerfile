@@ -12,9 +12,10 @@ RUN ./gradlew bootjar
 
 #
 FROM openjdk:17
-ENV ENC_KEY ""
+ENV ENC_KEY=""
 COPY --from=builder build/libs/*.jar /getto.jar
-EXPOSE 9099 
+RUN echo "ARGS is ${SOME_ARG}"
+EXPOSE 9099
 ENTRYPOINT ["nohup","java", "-Djasypt.encryptor.password=${ENC_KEY}", "-jar", "/getto.jar", ">", "out.log", "2>&1","&"]
 
 # gradlew 에 실행권한을 부여하고 프로젝트를 jar 형식의 파일로 빌드합니다.
