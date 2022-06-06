@@ -13,7 +13,7 @@ public class JasyptTest {
         String username = "username";
         String password = "password";
 
-        final String KEY = "test";
+        final String KEY = "1018";
         String encryptUrl = jasyptEncrypt(url, KEY);
         String encryptUsername = jasyptEncrypt(username, KEY);
         String encryptPassword = jasyptEncrypt(password, KEY);
@@ -25,6 +25,9 @@ public class JasyptTest {
         Assertions.assertThat(url).isEqualTo(jasyptDecrypt(encryptUrl, KEY));
         Assertions.assertThat(username).isEqualTo(jasyptDecrypt(encryptUsername, KEY));
         Assertions.assertThat(password).isEqualTo(jasyptDecrypt(encryptPassword, KEY));
+
+        String s = jasyptDecrypt("ip5pQuH0CoxuB3WCVp9PDNtYqtZfiUuaMZKtAA+LP9sKH4JlyRAANVrAitzoNDfP+OTz/2BsYWbkTEm8p900JZO2ABTgHASJDgPJSoBCAeOLHOgRcpoxKg==", KEY);
+        System.out.println("s = " + s);
     }
 
     private String jasyptEncrypt(String input, String key) {

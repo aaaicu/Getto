@@ -10,13 +10,12 @@ COPY src src
 RUN chmod +x ./gradlew
 RUN ./gradlew bootjar
 
-WORKDIR /build/libs
-CMD ls -al
-
 #
 FROM openjdk:17
+ENV ENC_KEY ""
 COPY --from=builder build/libs/*.jar /getto.jar
-
+EXPOSE 9099
+ENTRYPOINT ["nohup","java", "-Djasypt.encryptor.password=${ENC_KEY}", "-jar", "/getto.jar", ">", "out.log", "2>&1","&"]
 
 # gradlew 에 실행권한을 부여하고 프로젝트를 jar 형식의 파일로 빌드합니다.
 #
@@ -35,5 +34,5 @@ COPY --from=builder build/libs/*.jar /getto.jar
 # builder를 통해 생성된 jar 파일을 이미지로 가져옵니다.
 # 8080 포트를 공개한다고 명시합니다.
 
-#ENTRYPOINT ["java", "-jar", "/spiritual-war.jar"]
+
 # 가져온 jar 파일을 실행시킵니다.
