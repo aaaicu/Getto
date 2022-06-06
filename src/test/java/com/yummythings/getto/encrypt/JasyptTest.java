@@ -13,7 +13,7 @@ public class JasyptTest {
         String username = "username";
         String password = "password";
 
-        final String KEY = "1018";
+        final String KEY = "key";
         String encryptUrl = jasyptEncrypt(url, KEY);
         String encryptUsername = jasyptEncrypt(username, KEY);
         String encryptPassword = jasyptEncrypt(password, KEY);
