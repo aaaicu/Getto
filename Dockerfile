@@ -6,20 +6,17 @@ COPY gradle gradle
 COPY build.gradle .
 COPY settings.gradle .
 COPY src src
+COPY Wallet_GettoDB Wallet_GettoDB
 
 # Spring Boot 프로젝트 내의 gradle 설정 파일과 소스코드를 이미지로 가져옵니다.
 
 RUN chmod +x ./gradlew
 RUN ./gradlew bootjar
-RUN echo $(ls -1 $JENKINS_HOME)
-RUN mkdir -p Wallet_GettoDB
-ADD $JENKINS_HOME/Wallet_GettoDB Wallet_GettoDB
 
 FROM openjdk:17
-RUN mkdir -p /key/Wallet_GettoDB
 COPY --from=builder build/libs/*.jar /getto.jar
-COPY --from=builder Wallet_GettoDB /key/Wallet_GettoDB
-CMD scp aaaicu
+COPY --from=builder Wallet_GettoDB /Wallet_GettoDB
+
 EXPOSE 9099
 ENV ENC_KEY=1018
 #ENTRYPOINT ["nohup","java", "-Djasypt.encryptor.password=${KEY}", "-jar", "/getto.jar", ">", "out.log", "2>&1","&"]
