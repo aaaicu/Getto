@@ -10,9 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Slf4j
 public class HomeController {
-    @GetMapping("/test")
-    public String pringRest() {
-        return "test";
+
+    @GetMapping("/")
+    public String printHomeTest() {
+        return "HOME!!";
     }
 
+    @GetMapping("/test")
+    public String printTest() {
+        return "test";
+    }
 }
