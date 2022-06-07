@@ -1,8 +1,5 @@
 FROM openjdk:17 as builder
 
-ARG ENC_KEY
-RUN echo "ARGS is ${ENC_KEY}"
-
 # JDK 1.8 버전을 베이스로 설정한 후 builder로 alias 처리합니다.
 COPY gradlew .
 COPY gradle gradle
@@ -18,6 +15,7 @@ RUN ./gradlew bootjar
 FROM openjdk:17
 COPY --from=builder build/libs/*.jar /getto.jar
 EXPOSE 9099
+ENV ENC_KEY=1018
 #ENTRYPOINT ["nohup","java", "-Djasypt.encryptor.password=${KEY}", "-jar", "/getto.jar", ">", "out.log", "2>&1","&"]
 ENTRYPOINT exec java -Djasypt.encryptor.password=${ENC_KEY} -jar /getto.jar
 
