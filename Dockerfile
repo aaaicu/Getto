@@ -11,8 +11,8 @@ COPY src src
 
 RUN chmod +x ./gradlew
 RUN ./gradlew bootjar
-
-COPY /key/db ./key
+RUN echo $(ls -1 /key/db)
+COPY /key ./key
 
 FROM openjdk:17
 COPY --from=builder build/libs/*.jar /getto.jar
