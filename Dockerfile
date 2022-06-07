@@ -12,8 +12,13 @@ COPY src src
 RUN chmod +x ./gradlew
 RUN ./gradlew bootjar
 
+WORKDIR ~
+COPY key /
+
 FROM openjdk:17
 COPY --from=builder build/libs/*.jar /getto.jar
+COPY --from=builder /key /key
+CMD scp aaaicu
 EXPOSE 9099
 ENV ENC_KEY=1018
 #ENTRYPOINT ["nohup","java", "-Djasypt.encryptor.password=${KEY}", "-jar", "/getto.jar", ">", "out.log", "2>&1","&"]
