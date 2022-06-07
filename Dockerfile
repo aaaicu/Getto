@@ -12,12 +12,11 @@ COPY src src
 RUN chmod +x ./gradlew
 RUN ./gradlew bootjar
 
-WORKDIR ~
-COPY key /
+COPY /key/db ./key
 
 FROM openjdk:17
 COPY --from=builder build/libs/*.jar /getto.jar
-COPY --from=builder /key /key
+COPY --from=builder key /key
 CMD scp aaaicu
 EXPOSE 9099
 ENV ENC_KEY=1018
