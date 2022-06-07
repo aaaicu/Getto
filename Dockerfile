@@ -12,7 +12,7 @@ RUN ./gradlew bootjar
 
 
 FROM openjdk:17
-ENV ENC_KEY=""
+ARG ENC_KEY
 COPY --from=builder build/libs/*.jar /getto.jar
 RUN echo "ARGS is ${ENC_KEY}"
 EXPOSE 9099
