@@ -10,7 +10,7 @@ COPY src src
 RUN chmod +x ./gradlew
 RUN ./gradlew bootjar
 
-#
+
 FROM openjdk:17
 ENV ENC_KEY=""
 COPY --from=builder build/libs/*.jar /getto.jar
