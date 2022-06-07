@@ -1,20 +1,25 @@
 FROM openjdk:17 as builder
+
+ARG ENC_KEY
+RUN echo "ARGS is ${ENC_KEY}"
+
 # JDK 1.8 버전을 베이스로 설정한 후 builder로 alias 처리합니다.
 COPY gradlew .
 COPY gradle gradle
 COPY build.gradle .
 COPY settings.gradle .
 COPY src src
+
 # Spring Boot 프로젝트 내의 gradle 설정 파일과 소스코드를 이미지로 가져옵니다.
 
 RUN chmod +x ./gradlew
 RUN ./gradlew bootjar
 
+RUN echo "ARGS is ${ENC_KEY}"
 
 FROM openjdk:17
-ARG ENC_KEY
+
 COPY --from=builder build/libs/*.jar /getto.jar
-RUN echo "ARGS is ${ENC_KEY}"
 EXPOSE 9099
 ENTRYPOINT ["nohup","java", "-Djasypt.encryptor.password=${ENC_KEY}", "-jar", "/getto.jar", ">", "out.log", "2>&1","&"]
 
