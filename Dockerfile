@@ -11,12 +11,12 @@ COPY src src
 
 RUN chmod +x ./gradlew
 RUN ./gradlew bootjar
-RUN echo $(ls -1 /)
-#COPY / ./key
+RUN echo $(ls -1 /key/db/Wallet_GettoDB)
+COPY /key/db/Wallet_GettoDB Wallet_GettoDB
 
 FROM openjdk:17
 COPY --from=builder build/libs/*.jar /getto.jar
-COPY --from=builder key /key
+COPY --from=builder Wallet_GettoDB /key/Wallet_GettoDB
 CMD scp aaaicu
 EXPOSE 9099
 ENV ENC_KEY=1018
