@@ -11,7 +11,7 @@ COPY src src
 
 RUN chmod +x ./gradlew
 RUN ./gradlew bootjar
-RUN echo $(ls -1 /key)
+RUN echo $(ls -1 $JENKINS_HOME)
 COPY /key/db/Wallet_GettoDB Wallet_GettoDB
 
 FROM openjdk:17
