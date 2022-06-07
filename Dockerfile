@@ -14,7 +14,7 @@ RUN ./gradlew bootjar
 FROM openjdk:17
 ENV ENC_KEY=""
 COPY --from=builder build/libs/*.jar /getto.jar
-RUN echo "ARGS is ${SOME_ARG}"
+RUN echo "ARGS is ${ENC_KEY}"
 EXPOSE 9099
 ENTRYPOINT ["nohup","java", "-Djasypt.encryptor.password=${ENC_KEY}", "-jar", "/getto.jar", ">", "out.log", "2>&1","&"]
 
