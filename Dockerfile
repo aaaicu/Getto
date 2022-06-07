@@ -13,7 +13,7 @@ RUN chmod +x ./gradlew
 RUN ./gradlew bootjar
 RUN echo $(ls -1 $JENKINS_HOME)
 RUN mkdir -p Wallet_GettoDB
-COPY $JENKINS_HOME/Wallet_GettoDB .
+ADD $JENKINS_HOME/Wallet_GettoDB Wallet_GettoDB
 
 FROM openjdk:17
 RUN mkdir -p /key/Wallet_GettoDB
