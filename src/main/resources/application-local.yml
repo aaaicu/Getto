@@ -7,6 +7,27 @@ spring:
     username: ENC(0J2OycehFY3bZaofp1ikEw==)
     password: ENC(vL2XAsX7VVd6zPvsPJhPFmqYOzAE5jW6)
 
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          kakao:
+#            client-id: "e82fa866da628313f8a8e42774b72077"
+#            redirect-uri: "{baseUrl}/{action}/oauth2/{registrationId}" # http://localhost:8080/login/oauth2/code/kakao
+#            client-authentication-method: POST
+#            authorization-grant-type: authorization_code
+#            scope: profile_nickname, profile_image, account_email
+#            client-name: Kakao
+#        provider:
+#          kakao:
+#            authorization_uri: https://kauth.kakao.com/oauth/authorize
+#            token_uri: https://kauth.kakao.com/oauth/token
+#            user-info-uri: https://kapi.kakao.com/v2/user/me
+#            user_name_attribute: id
+  thymeleaf:
+    prefix: classpath:/static/
+
+
 jasypt:
   encryptor:
     bean: jasyptStringEncryptor
