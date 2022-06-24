@@ -12,19 +12,24 @@ public class JasyptTest {
         String url = "jdbc:oracle:thin:@test_high?TNS_ADMIN=/test/Wallet_TestDB";
         String username = "username";
         String password = "password";
+        String restKey = "restKey";
 
         final String KEY = "key";
         String encryptUrl = jasyptEncrypt(url, KEY);
         String encryptUsername = jasyptEncrypt(username, KEY);
         String encryptPassword = jasyptEncrypt(password, KEY);
+        String encryptRestKey = jasyptEncrypt(restKey, KEY);
 
         System.out.println("encryptUrl : " + encryptUrl);
         System.out.println("encryptUsername : " + encryptUsername);
         System.out.println("encryptPassword : " + encryptPassword);
+        System.out.println("encryptRestKey : " + encryptRestKey);
+
 
         Assertions.assertThat(url).isEqualTo(jasyptDecrypt(encryptUrl, KEY));
         Assertions.assertThat(username).isEqualTo(jasyptDecrypt(encryptUsername, KEY));
         Assertions.assertThat(password).isEqualTo(jasyptDecrypt(encryptPassword, KEY));
+        Assertions.assertThat(restKey).isEqualTo(jasyptDecrypt(encryptRestKey, KEY));
 
         String s = jasyptDecrypt("ip5pQuH0CoxuB3WCVp9PDNtYqtZfiUuaMZKtAA+LP9sKH4JlyRAANVrAitzoNDfP+OTz/2BsYWbkTEm8p900JZO2ABTgHASJDgPJSoBCAeOLHOgRcpoxKg==", KEY);
         System.out.println("s = " + s);
