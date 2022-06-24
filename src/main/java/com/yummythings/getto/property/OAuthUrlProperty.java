@@ -11,7 +11,10 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties("oauth")
 public class OAuthUrlProperty {
     private String hostUrl;
+    private Kakao kakao;
 
+    @Setter
+    @Getter
     public static class Kakao{
     private String restApiKey;
     }

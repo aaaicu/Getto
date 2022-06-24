@@ -25,7 +25,7 @@ public class UserAuthService {
     private MultiValueMap<String, String> getParams(String authorizationCode) {
         return AuthorizationCodeDTO.toParams(AuthorizationCodeDTO.builder()
                 .grantType("authorization_code")
-                .clientId("e82fa866da628313f8a8e42774b72077")
+                .clientId(oAuthUrlProperty.getKakao().getRestApiKey())
                 .redirectUri(oAuthUrlProperty.getHostUrl()+ "/oauth/kakao")
                 .code(authorizationCode)
                 .build());
