@@ -32,16 +32,16 @@ oauth:
 
 logging:
   level:
-    root: INFO
-#  file:
-#    name: "/Users/aaaicu/Library/Mobile Documents/com~apple~CloudDocs/dev/projects/business/Getto/log/getto-api.log"
-#    path: "/Users/aaaicu/Library/Mobile Documents/com~apple~CloudDocs/dev/projects/business/Getto/log"
-#  logback:
-#    rollingpolicy:
-#      file-name-pattern: "${LOG_PATH}/history/getto-api.log.%d{yyyy-MM-dd}_%i.zip"
-#      max-history: 7
-#      max-file-size: 5KB
-#      total-size-cap: 2GB
+    root: DEBUG
+  file:
+    name: "/Users/aaaicu/Library/Mobile Documents/com~apple~CloudDocs/dev/projects/business/Getto/log/getto-api.log"
+    path: "/Users/aaaicu/Library/Mobile Documents/com~apple~CloudDocs/dev/projects/business/Getto/log"
+  logback:
+    rollingpolicy:
+      file-name-pattern: "${LOG_PATH}/history/getto-api.log.%d{yyyy-MM-dd}_%i.zip"
+      max-history: 7
+      max-file-size: 5KB
+      total-size-cap: 2GB
 
 jasypt:
   encryptor:

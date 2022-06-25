@@ -38,7 +38,7 @@ jasypt:
 
 logging:
   level:
-    root: INFO
+    root: DEBUG
   file:
     name: "/var/logs/getto-api.log"
     path: "/var/logs"
