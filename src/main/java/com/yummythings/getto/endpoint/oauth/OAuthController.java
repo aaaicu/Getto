@@ -2,11 +2,13 @@ package com.yummythings.getto.endpoint.oauth;
 
 import com.yummythings.getto.service.UserAuthService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 @RequestMapping("/oauth")
 public class OAuthController {
 
@@ -18,7 +20,7 @@ public class OAuthController {
 
         // 넘어온 인가 코드로 access_token 발급
         String profile = userAuthService.getAccessToken(code);
-        System.out.println("profile = " + profile);
+        log.debug("profile = " + profile);
 
         // refresh_token 저장
 
