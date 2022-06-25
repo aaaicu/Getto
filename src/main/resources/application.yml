@@ -36,3 +36,15 @@ jasypt:
     bean: jasyptStringEncryptor
     password :
 
+logging:
+  level:
+    root: INFO
+  file:
+    name: "/var/logs/getto-api.log"
+    path: "/var/logs"
+  logback:
+    rollingpolicy:
+      file-name-pattern: "${LOG_PATH}/history/getto-api.%d{yyyy-MM-dd}_%i.zip"
+      max-history: 7
+      max-file-size: 100MB
+      total-size-cap: 2GB
