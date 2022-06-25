@@ -20,7 +20,7 @@ public class OAuthController {
 
         // 넘어온 인가 코드로 access_token 발급
         String profile = userAuthService.getAccessToken(code);
-        log.debug("profile = " + profile);
+        log.info("profile = " + profile);
 
         // refresh_token 저장
 
