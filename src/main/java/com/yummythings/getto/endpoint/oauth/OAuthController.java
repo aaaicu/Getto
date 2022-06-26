@@ -30,7 +30,7 @@ public class OAuthController {
         // JWT 토큰발급
 
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("인증값 : " + profile);
     }
 
 }

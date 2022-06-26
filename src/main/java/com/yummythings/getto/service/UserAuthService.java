@@ -17,19 +17,12 @@ public class UserAuthService {
     private final OAuthUrlProperty oAuthUrlProperty;
 
     private final HttpUtil httpUtil;
+
     public String getAccessToken(String authorizationCode) {
-        HttpHeaders defaultHeader = httpUtil.getDefaultHeader();
-        return httpUtil.post(REQUEST_ACCESS_TOKEN_URL, defaultHeader, getParams(authorizationCode), String.class).getBody();
+        return httpUtil.post(
+                REQUEST_ACCESS_TOKEN_URL,
+                httpUtil.getDefaultHeader(),
+                oAuthUrlProperty.getAuthorizationCodeDTO(authorizationCode),
+                String.class).getBody();
     }
-
-    private MultiValueMap<String, String> getParams(String authorizationCode) {
-        return AuthorizationCodeDTO.toParams(AuthorizationCodeDTO.builder()
-                .grantType("authorization_code")
-                .clientId(oAuthUrlProperty.getKakao().getRestApiKey())
-                .redirectUri(oAuthUrlProperty.getHostUrl()+ "/oauth/kakao")
-                .code(authorizationCode)
-                .build());
-    }
-
-
 }
