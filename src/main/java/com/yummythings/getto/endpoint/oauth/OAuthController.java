@@ -1,6 +1,7 @@
 package com.yummythings.getto.endpoint.oauth;
 
 import com.yummythings.getto.service.UserAuthService;
+import com.yummythings.getto.service.dto.KakaoAuthResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,8 @@ public class OAuthController {
     public ResponseEntity<String> kakaoCallback(@RequestParam String code) {
 
         // 넘어온 인가 코드로 access_token 발급
-        String profile = userAuthService.getAccessToken(code);
-        log.info("profile = " + profile);
+        KakaoAuthResponseDTO kakaoAuth = userAuthService.getAccessToken(code);
+        log.info("kakaoAuth = " + kakaoAuth);
 
         // refresh_token 저장
 
@@ -30,7 +31,7 @@ public class OAuthController {
         // JWT 토큰발급
 
 
-        return ResponseEntity.ok("인증값 : " + profile);
+        return ResponseEntity.ok("인증값 : " + kakaoAuth);
     }
 
 }

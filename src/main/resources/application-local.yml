@@ -33,7 +33,7 @@ oauth:
 
 logging:
   level:
-    root: DEBUG
+    root: INFO
 #  file:
 #    name: "/Users/aaaicu/Library/Mobile Documents/com~apple~CloudDocs/dev/projects/business/Getto/log/getto-api.log"
 #    path: "/Users/aaaicu/Library/Mobile Documents/com~apple~CloudDocs/dev/projects/business/Getto/log"

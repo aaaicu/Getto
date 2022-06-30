@@ -3,6 +3,7 @@ package com.yummythings.getto.service;
 import com.yummythings.getto.component.HttpUtil;
 import com.yummythings.getto.property.OAuthUrlProperty;
 import com.yummythings.getto.service.dto.AuthorizationCodeDTO;
+import com.yummythings.getto.service.dto.KakaoAuthResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -18,11 +19,11 @@ public class UserAuthService {
 
     private final HttpUtil httpUtil;
 
-    public String getAccessToken(String authorizationCode) {
+    public KakaoAuthResponseDTO getAccessToken(String authorizationCode) {
         return httpUtil.post(
                 REQUEST_ACCESS_TOKEN_URL,
                 httpUtil.getDefaultHeader(),
                 oAuthUrlProperty.getAuthorizationCodeDTO(authorizationCode),
-                String.class).getBody();
+                KakaoAuthResponseDTO.class).getBody();
     }
 }
