@@ -1,11 +1,35 @@
 server:
   port: 9099
 spring:
+  #  datasource:
+#    url: ENC(wi6yFg2Zwe0qzft9vToYXQOEEcg4UuZX6v/hlJEF1fWNmVB+0AvhL7cXUc27urBvw4+L2mrKWRw/na4d1Bwa/4OQqCGzFhcuR8VTZZQ0LqePVxhJiGXlxA==)
+#    driver-class-name : oracle.jdbc.OracleDriver
+#    username: ENC(0J2OycehFY3bZaofp1ikEw==)
+#    password: ENC(vL2XAsX7VVd6zPvsPJhPFmqYOzAE5jW6)
+  h2:
+    console:
+      enabled: true
+
   datasource:
-    url: ENC(wi6yFg2Zwe0qzft9vToYXQOEEcg4UuZX6v/hlJEF1fWNmVB+0AvhL7cXUc27urBvw4+L2mrKWRw/na4d1Bwa/4OQqCGzFhcuR8VTZZQ0LqePVxhJiGXlxA==)
-    driver-class-name : oracle.jdbc.OracleDriver
-    username: ENC(0J2OycehFY3bZaofp1ikEw==)
-    password: ENC(vL2XAsX7VVd6zPvsPJhPFmqYOzAE5jW6)
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+    defer-datasource-initialization: true
+
+jwt:
+  header: Authorization
+  secret: YWFhaWN1LWdldHRvLXNwcmluZy1ib290LWp3dC1zZWNyZXQK
+  token-validity-in-seconds: 86400
 
 #  security:
 #    oauth2:
@@ -33,7 +57,9 @@ oauth:
 
 logging:
   level:
-    root: INFO
+    com.yummythings.getto: DEBUG
+
+
 #  file:
 #    name: "/Users/aaaicu/Library/Mobile Documents/com~apple~CloudDocs/dev/projects/business/Getto/log/getto-api.log"
 #    path: "/Users/aaaicu/Library/Mobile Documents/com~apple~CloudDocs/dev/projects/business/Getto/log"
