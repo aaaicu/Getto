@@ -1,7 +1,9 @@
 package com.yummythings.getto.endpoint.oauth;
 
 import com.yummythings.getto.dto.TokenDTO;
+import com.yummythings.getto.service.JwtService;
 import com.yummythings.getto.service.UserAuthService;
+import com.yummythings.getto.service.dto.KakaoAuthInfoDTO;
 import com.yummythings.getto.service.dto.KakaoAuthResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class OAuthController {
 
     private final UserAuthService userAuthService;
+    private final JwtService jwtService;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     @ResponseBody
@@ -25,15 +28,20 @@ public class OAuthController {
 
         // 넘어온 인가 코드로 access_token 발급
         KakaoAuthResponseDTO kakaoAuth = userAuthService.getAuthResponse(code);
-        log.info("kakaoAuth = " + kakaoAuth);
+        KakaoAuthInfoDTO authUserInfo = userAuthService.getAuthUserInfo(kakaoAuth.getAccessToken());
+        log.debug("authUserInfo = " + authUserInfo);
+        return ResponseEntity.ok(jwtService.getJwtToken(authUserInfo));
+
 
 //        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken()
 
 //        authenticationManagerBuilder.getObject().authenticate()
 
 
+
+
         // refresh_token 저장
-        userAuthService.saveAuthRefreshToken(kakaoAuth.getRefreshToken(), kakaoAuth.getRefreshTokenExpiresIn());
+//        userAuthService.saveAuthRefreshToken(kakaoAuth.getRefreshToken(), kakaoAuth.getRefreshTokenExpiresIn());
 
 
 
@@ -46,7 +54,7 @@ public class OAuthController {
 
 
 
-        return ResponseEntity.ok(TokenDTO.builder().build());
+
     }
 
 }

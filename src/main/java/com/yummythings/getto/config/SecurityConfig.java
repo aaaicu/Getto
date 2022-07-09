@@ -56,6 +56,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/hello").permitAll() // 인증 허용 대상 패턴
                 .antMatchers("/api/authenticate").permitAll() // 인증 허용 대상 패턴
+                .antMatchers("/oauth/kakao").permitAll() // 인증 허용 대상 패턴
+                .antMatchers("/oauth/authorize").permitAll() // 인증 허용 대상 패턴
                 .antMatchers("/api/signup").permitAll() // 인증 허용 대상 패턴
                 .antMatchers("/error").permitAll() // 인증 허용 대상 패턴
                 .anyRequest().authenticated() // 나머지 요청은 인증 필요
