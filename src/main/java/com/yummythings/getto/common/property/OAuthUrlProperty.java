@@ -1,4 +1,4 @@
-package com.yummythings.getto.property;
+package com.yummythings.getto.common.property;
 
 import com.yummythings.getto.service.dto.AuthorizationCodeDTO;
 import lombok.Getter;

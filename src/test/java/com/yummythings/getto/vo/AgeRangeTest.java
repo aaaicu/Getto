@@ -1,5 +1,6 @@
 package com.yummythings.getto.vo;
 
+import com.yummythings.getto.common.vo.AgeRange;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

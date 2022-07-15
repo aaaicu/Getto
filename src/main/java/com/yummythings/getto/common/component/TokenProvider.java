@@ -1,5 +1,6 @@
-package com.yummythings.getto.component;
+package com.yummythings.getto.common.component;
 
+import com.yummythings.getto.dto.TokenDTO;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import lombok.extern.slf4j.Slf4j;
@@ -14,9 +15,7 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.security.Keys;
 
 import java.security.Key;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -25,14 +24,18 @@ public class TokenProvider implements InitializingBean {
 
     private static final String AUTHORITIES_KEY = "auth";
     private final String secret;
-    private final long tokenValidityMilliseconds;
+    private final long accessTokenExpirationMilliseconds;
+    private final long refreshTokenExpirationMilliseconds;
 
     private Key key;
+    private static final String JWT_ISSUER = "getto-aaaicu";
 
     public TokenProvider(@Value("${jwt.secret}") String secret,
-                         @Value("${jwt.token-validity-in-seconds}") long tokenValidityMilliseconds) {
+                         @Value("${jwt.access-token-expiration-seconds}") long accessTokenExpirationSeconds,
+                         @Value("${jwt.refresh-token-expiration-seconds}") long refreshTokenExpirationSeconds) {
         this.secret = secret;
-        this.tokenValidityMilliseconds = tokenValidityMilliseconds * 1000;
+        this.accessTokenExpirationMilliseconds = accessTokenExpirationSeconds * 1000;
+        this.refreshTokenExpirationMilliseconds  = refreshTokenExpirationSeconds * 1000;
     }
 
     @Override
@@ -41,19 +44,41 @@ public class TokenProvider implements InitializingBean {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String createToken(Authentication authentication) {
+    public TokenDTO createTokenByKakao(Authentication authentication,String kakaoAccessToken, String kakaoRefreshToken) {
+        return TokenDTO.builder()
+                .accessToken(createKakaoAccessToken(authentication, kakaoAccessToken))
+                .refreshToken(createKakaoRefreshToken(authentication, kakaoRefreshToken))
+                .build();
+    }
+
+    private String createKakaoAccessToken(Authentication authentication, String kakaoAccessToken) {
+        return this.createToken(authentication,
+                Map.of( "auth_organization", "KAKAO",
+                        "access_token", kakaoAccessToken),
+                accessTokenExpirationMilliseconds);
+    }
+
+    private String createKakaoRefreshToken(Authentication authentication, String kakaoRefreshToken) {
+        return this.createToken(authentication,
+                Map.of( "auth_organization", "KAKAO",
+                        "refresh_token", kakaoRefreshToken),
+                refreshTokenExpirationMilliseconds);
+    }
+
+    private String createToken(Authentication authentication, Map<String, Object> claims, Long expirationMilliseconds) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
-
-        long now = (new Date()).getTime();
-        Date validity = new Date(now + this.tokenValidityMilliseconds);
+        Date expiration = new Date((new Date()).getTime() + expirationMilliseconds);
 
         return Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
-                .signWith(key, SignatureAlgorithm.HS512)
-                .setExpiration(validity)
+                .setIssuedAt(new Date())
+                .setIssuer(JWT_ISSUER)
+                .setExpiration(expiration)
+                .addClaims(claims)
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -65,20 +90,24 @@ public class TokenProvider implements InitializingBean {
                 .parseClaimsJws(token)
                 .getBody();
 
-        Collection<? extends GrantedAuthority> authorities =
-                Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
-                        .map(SimpleGrantedAuthority::new)
-                        .collect(Collectors.toList());
-
+        Collection<? extends GrantedAuthority> authorities = parsingAuthorities(claims);
         User principal = new User(claims.getSubject(), "", authorities);
-
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
 
+    private List<SimpleGrantedAuthority> parsingAuthorities(Claims claims) {
+        return Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+    }
+
     public boolean validateToken(String token) {
+        if (token == null) {
+            return false;
+        }
+
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             log.info("잘못된 JWT 서명입니다.");
         } catch (ExpiredJwtException e) {
@@ -88,6 +117,6 @@ public class TokenProvider implements InitializingBean {
         } catch (IllegalArgumentException e) {
             log.info("JWT 토큰이 잘못되었습니다.");
         }
-        return false;
+        return true;
     }
 }

@@ -1,8 +1,8 @@
-package com.yummythings.getto.config;
+package com.yummythings.getto.common.config;
 
-import com.yummythings.getto.component.TokenProvider;
-import com.yummythings.getto.jwt.JwtAccessDeniedHandler;
-import com.yummythings.getto.jwt.JwtAuthenticationEntryPoint;
+import com.yummythings.getto.common.component.TokenProvider;
+import com.yummythings.getto.common.jwt.JwtAccessDeniedHandler;
+import com.yummythings.getto.common.jwt.JwtAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-                .antMatchers("/h2-console/**", "/favicon.ico");
+                .antMatchers("/h2-console/**", "/favicon.ico", "/oauth/kakao", "/error");
     }
 
     @Override
@@ -52,18 +52,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
+//                .and()
+//                .authorizeRequests()
+//                .antMatchers("/").permitAll() // 인증 허용 대상 패턴
                 .and()
-                .authorizeRequests()
-                .antMatchers("/api/hello").permitAll() // 인증 허용 대상 패턴
-                .antMatchers("/api/authenticate").permitAll() // 인증 허용 대상 패턴
-                .antMatchers("/oauth/kakao").permitAll() // 인증 허용 대상 패턴
-                .antMatchers("/oauth/authorize").permitAll() // 인증 허용 대상 패턴
-                .antMatchers("/api/signup").permitAll() // 인증 허용 대상 패턴
-                .antMatchers("/error").permitAll() // 인증 허용 대상 패턴
-                .anyRequest().authenticated() // 나머지 요청은 인증 필요
+                .apply(new JwtSecurityConfig(tokenProvider))
+        ;
 
-                .and()
-                .apply(new JwtSecurityConfig(tokenProvider));
     }
 
     //    @Override

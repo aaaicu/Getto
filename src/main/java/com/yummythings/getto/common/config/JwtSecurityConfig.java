@@ -1,7 +1,7 @@
-package com.yummythings.getto.config;
+package com.yummythings.getto.common.config;
 
-import com.yummythings.getto.component.TokenProvider;
-import com.yummythings.getto.jwt.JwtFilter;
+import com.yummythings.getto.common.component.TokenProvider;
+import com.yummythings.getto.common.jwt.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

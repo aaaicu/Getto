@@ -30,7 +30,7 @@ oauth:
   host-url: https://api.yummy-things.xyz
   kakao:
     rest-api-key: ENC(KfzC1BmdAWFg5cgx7pB15RP4goeXOCT819KOgI2GaDMwIktsqW99K+vAQcFZP1gd)
-    url: /oauth/kakao
+    url: /callback/kakao
 
 jasypt:
   encryptor:

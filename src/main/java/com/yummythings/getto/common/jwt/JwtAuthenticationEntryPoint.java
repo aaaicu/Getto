@@ -1,4 +1,4 @@
-package com.yummythings.getto.jwt;
+package com.yummythings.getto.common.jwt;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

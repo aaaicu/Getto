@@ -1,7 +1,7 @@
 package com.yummythings.getto.service;
 
-import com.yummythings.getto.component.HttpUtil;
-import com.yummythings.getto.property.OAuthUrlProperty;
+import com.yummythings.getto.common.component.HttpUtil;
+import com.yummythings.getto.common.property.OAuthUrlProperty;
 import com.yummythings.getto.service.dto.KakaoAuthInfoDTO;
 import com.yummythings.getto.service.dto.KakaoAuthResponseDTO;
 import lombok.RequiredArgsConstructor;

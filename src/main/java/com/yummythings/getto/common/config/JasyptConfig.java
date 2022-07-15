@@ -1,4 +1,4 @@
-package com.yummythings.getto.config;
+package com.yummythings.getto.common.config;
 
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;

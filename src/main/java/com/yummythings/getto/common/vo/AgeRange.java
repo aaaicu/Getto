@@ -1,4 +1,4 @@
-package com.yummythings.getto.vo;
+package com.yummythings.getto.common.vo;
 
 import lombok.*;
 

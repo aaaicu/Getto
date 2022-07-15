@@ -29,7 +29,12 @@ spring:
 jwt:
   header: Authorization
   secret: YWFhaWN1LWdldHRvLXNwcmluZy1ib290LWp3dC1zZWNyZXQK
-  token-validity-in-seconds: 86400
+
+
+  access-token-expiration-seconds: 300
+  # 86400*7*2 ( 2주 )
+  refresh-token-expiration-seconds: 1209600
+
 
 #  security:
 #    oauth2:
@@ -50,10 +55,10 @@ jwt:
 #            user_name_attribute: id
 
 oauth:
-  host-url: http://localhost:9099
+  host-url: http://localhost:3000
   kakao:
     rest-api-key: ENC(KfzC1BmdAWFg5cgx7pB15RP4goeXOCT819KOgI2GaDMwIktsqW99K+vAQcFZP1gd)
-    url: /oauth/kakao
+    url: /callback/kakao
 
 logging:
   level:

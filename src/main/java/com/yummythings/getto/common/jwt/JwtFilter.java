@@ -1,6 +1,7 @@
-package com.yummythings.getto.jwt;
+package com.yummythings.getto.common.jwt;
 
-import com.yummythings.getto.component.TokenProvider;
+import com.yummythings.getto.common.component.TokenProvider;
+import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -20,9 +21,10 @@ public class JwtFilter extends GenericFilter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String jwt = resolveToken((HttpServletRequest) request);
         log.info(((HttpServletRequest) request).getRequestURI());
-        if (tokenProvider.validateToken(jwt)) saveAuthentication(jwt);
+
+        String accessToken = resolveToken((HttpServletRequest) request);
+        if (tokenProvider.validateToken(accessToken)) saveAuthentication(accessToken);
         chain.doFilter(request, response);
     }
 
@@ -37,6 +39,6 @@ public class JwtFilter extends GenericFilter {
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
         }
-        return null;
+        throw new JwtException("토큰이 없습니다.");
     }
 }

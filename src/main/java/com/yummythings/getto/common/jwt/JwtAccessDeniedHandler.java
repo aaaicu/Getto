@@ -1,4 +1,4 @@
-package com.yummythings.getto.jwt;
+package com.yummythings.getto.common.jwt;
 
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;

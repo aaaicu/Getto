@@ -1,4 +1,4 @@
-package com.yummythings.getto.component;
+package com.yummythings.getto.common.component;
 
 import org.springframework.stereotype.Component;
 
