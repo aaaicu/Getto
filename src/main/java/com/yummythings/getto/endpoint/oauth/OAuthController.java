@@ -22,7 +22,7 @@ public class OAuthController {
     private final JwtService jwtService;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    @CrossOrigin(originPatterns ="*")
+    @CrossOrigin(origins ="*", allowedHeaders = "*" )
     @ResponseBody
     @GetMapping("/kakao")
     public ResponseEntity<TokenDTO> kakaoCallback(@RequestParam String code) {
