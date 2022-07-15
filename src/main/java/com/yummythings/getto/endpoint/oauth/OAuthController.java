@@ -24,7 +24,7 @@ public class OAuthController {
     private final JwtService jwtService;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    @CrossOrigin(originPatterns = CORS_ALLOW_URL )
+//    @CrossOrigin(originPatterns = CORS_ALLOW_URL )
     @ResponseBody
     @GetMapping("/kakao")
     public ResponseEntity<TokenDTO> kakaoCallback(@RequestParam String code) {
