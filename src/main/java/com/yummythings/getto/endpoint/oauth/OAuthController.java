@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.web.bind.annotation.*;
 
+import static com.yummythings.getto.common.constant.AccessableClient.CORS_ALLOW_URL;
+
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -22,7 +24,7 @@ public class OAuthController {
     private final JwtService jwtService;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    @CrossOrigin(origins ="*", allowedHeaders = "*" )
+    @CrossOrigin(originPatterns = CORS_ALLOW_URL )
     @ResponseBody
     @GetMapping("/kakao")
     public ResponseEntity<TokenDTO> kakaoCallback(@RequestParam String code) {

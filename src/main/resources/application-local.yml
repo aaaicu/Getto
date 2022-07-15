@@ -6,15 +6,14 @@ spring:
 #    driver-class-name : oracle.jdbc.OracleDriver
 #    username: ENC(0J2OycehFY3bZaofp1ikEw==)
 #    password: ENC(vL2XAsX7VVd6zPvsPJhPFmqYOzAE5jW6)
-  h2:
-    console:
-      enabled: true
-
   datasource:
     url: jdbc:h2:mem:testdb
     driver-class-name: org.h2.Driver
     username: sa
     password:
+  h2:
+    console:
+      enabled: true
 
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
@@ -30,29 +29,9 @@ jwt:
   header: Authorization
   secret: YWFhaWN1LWdldHRvLXNwcmluZy1ib290LWp3dC1zZWNyZXQK
 
-
   access-token-expiration-seconds: 300
   # 86400*7*2 ( 2주 )
   refresh-token-expiration-seconds: 1209600
-
-
-#  security:
-#    oauth2:
-#      client:
-#        registration:
-#          kakao:
-#            client-id: "e82fa866da628313f8a8e42774b72077"
-#            redirect-uri: "{baseUrl}/{action}/oauth2/{registrationId}" # http://localhost:8080/login/oauth2/code/kakao
-#            client-authentication-method: POST
-#            authorization-grant-type: authorization_code
-#            scope: profile_nickname, profile_image, account_email
-#            client-name: Kakao
-#        provider:
-#          kakao:
-#            authorization_uri: https://kauth.kakao.com/oauth/authorize
-#            token_uri: https://kauth.kakao.com/oauth/token
-#            user-info-uri: https://kapi.kakao.com/v2/user/me
-#            user_name_attribute: id
 
 oauth:
   host-url: http://localhost:3000
@@ -60,22 +39,11 @@ oauth:
     rest-api-key: ENC(KfzC1BmdAWFg5cgx7pB15RP4goeXOCT819KOgI2GaDMwIktsqW99K+vAQcFZP1gd)
     url: /callback/kakao
 
-logging:
-  level:
-    com.yummythings.getto: DEBUG
-
-
-#  file:
-#    name: "/Users/aaaicu/Library/Mobile Documents/com~apple~CloudDocs/dev/projects/business/Getto/log/getto-api.log"
-#    path: "/Users/aaaicu/Library/Mobile Documents/com~apple~CloudDocs/dev/projects/business/Getto/log"
-#  logback:
-#    rollingpolicy:
-#      file-name-pattern: "${LOG_PATH}/history/getto-api.log.%d{yyyy-MM-dd}_%i.zip"
-#      max-history: 7
-#      max-file-size: 5KB
-#      total-size-cap: 2GB
-
 jasypt:
   encryptor:
     bean: jasyptStringEncryptor
     password :
+
+logging:
+  level:
+    com.yummythings.getto: DEBUG
