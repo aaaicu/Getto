@@ -39,6 +39,9 @@ oauth:
     rest-api-key: ENC(KfzC1BmdAWFg5cgx7pB15RP4goeXOCT819KOgI2GaDMwIktsqW99K+vAQcFZP1gd)
     url: /callback/kakao
 
+front:
+  host-url: http://localhost:3000
+
 jasypt:
   encryptor:
     bean: jasyptStringEncryptor

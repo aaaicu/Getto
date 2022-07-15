@@ -31,6 +31,9 @@ oauth:
     rest-api-key: ENC(KfzC1BmdAWFg5cgx7pB15RP4goeXOCT819KOgI2GaDMwIktsqW99K+vAQcFZP1gd)
     url: /callback/kakao
 
+front:
+  host-url: https://www.yummy-things.xyz
+
 jasypt:
   encryptor:
     bean: jasyptStringEncryptor

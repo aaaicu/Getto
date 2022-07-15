@@ -23,8 +23,8 @@ public class JwtFilter extends GenericFilter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         log.info(((HttpServletRequest) request).getRequestURI());
 
-        String accessToken = resolveToken((HttpServletRequest) request);
-        if (tokenProvider.validateToken(accessToken)) saveAuthentication(accessToken);
+//        String accessToken = resolveToken((HttpServletRequest) request);
+//        if (tokenProvider.validateToken(accessToken)) saveAuthentication(accessToken);
         chain.doFilter(request, response);
     }
 
