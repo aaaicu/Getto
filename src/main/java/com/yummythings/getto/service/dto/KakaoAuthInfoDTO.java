@@ -26,7 +26,7 @@ public class KakaoAuthInfoDTO {
     @NoArgsConstructor
     @ToString
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-    static class KakaoAccount{
+    public static class KakaoAccount{
         private Boolean profileNicknameNeedsAgreement;
         private Boolean profileImageNeedsAgreement;
         private Profile profile;
@@ -44,37 +44,10 @@ public class KakaoAuthInfoDTO {
     @NoArgsConstructor
     @ToString
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-    static class Profile{
+    public static class Profile{
         private String nickname;
         private String thumbnailImageUrl;
         private String profileImageUrl;
         private Boolean isDefaultImage;
     }
-
-
-
-
-
-
-//    {"id":2310814960,"connected_at":"2022-07-09T13:50:05Z",
-//
-//            "properties":{"nickname":"재현","profile_image":"http://k.kakaocdn.net/dn/NS359/btrFciz0IjH/XlOTWYDb5kIkhqpMl5vTTK/img_640x640.jpg","thumbnail_image":"http://k.kakaocdn.net/dn/NS359/btrFciz0IjH/XlOTWYDb5kIkhqpMl5vTTK/img_110x110.jpg"},
-//            "kakao_account":{
-//                "profile_nickname_needs_agreement":false,"profile_image_needs_agreement":false,
-//                "profile":{"nickname":"재현","thumbnail_image_url":"http://k.kakaocdn.net/dn/NS359/btrFciz0IjH/XlOTWYDb5kIkhqpMl5vTTK/img_110x110.jpg","profile_image_url":"http://k.kakaocdn.net/dn/NS359/btrFciz0IjH/XlOTWYDb5kIkhqpMl5vTTK/img_640x640.jpg","is_default_image":false},
-//                "has_age_range":true,
-//                "age_range_needs_agreement":false,
-//                "age_range":"30~39"
-//            }
-//    }
-
-//    @JsonCreator
-//    public KakaoAuthInfoDTO(@JsonProperty("scope") String scope) {
-//        this.scope = parseScope(scope);
-//    }
-
-//    public List<String> parsePropertyKeys(String propertyKeys) {
-//        String[] scopes = propertyKeys.split(" ");
-//        return Arrays.stream(scopes).map(String::trim).collect(Collectors.toList());
-//    }
 }

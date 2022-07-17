@@ -16,8 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
-@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final TokenProvider tokenProvider;
@@ -59,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 //                .and()
 //                .authorizeRequests()
-//                .antMatchers("/").permitAll() // 인증 허용 대상 패턴
+//                .antMatchers("/").permitAll() // 인가 허용 대상 패턴
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider))
         ;

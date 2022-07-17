@@ -22,9 +22,8 @@ public class JwtFilter extends GenericFilter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         log.info(((HttpServletRequest) request).getRequestURI());
+        log.info(((HttpServletRequest) request).getHeader(AUTHORIZATION_HEADER));
 
-//        String accessToken = resolveToken((HttpServletRequest) request);
-//        if (tokenProvider.validateToken(accessToken)) saveAuthentication(accessToken);
         chain.doFilter(request, response);
     }
 
