@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,16 +13,18 @@ import java.util.stream.Collectors;
 @Getter
 @ToString
 @EqualsAndHashCode
+@AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class KakaoAuthResponseDTO {
-    private String accessToken;
+    protected String accessToken;
+    protected String refreshToken;
+    protected String idToken;
     private String tokenType;
-    private String refreshToken;
-    private String idToken;
     private int expiresIn;
     private List<String> scope;
     private int refreshTokenExpiresIn;
+
 
     @JsonCreator
     public KakaoAuthResponseDTO(@JsonProperty("scope") String scope) {

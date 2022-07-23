@@ -1,4 +1,4 @@
-package com.yummythings.getto.dto;
+package com.yummythings.getto.endpoint.oauth.response;
 
 import lombok.*;
 

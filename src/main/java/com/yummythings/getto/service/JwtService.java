@@ -2,8 +2,6 @@ package com.yummythings.getto.service;
 
 import com.yummythings.getto.common.component.TokenProvider;
 import com.yummythings.getto.dto.TokenDTO;
-import com.yummythings.getto.service.dto.KakaoAuthInfoDTO;
-import com.yummythings.getto.service.dto.KakaoAuthResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,26 +20,23 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JwtService {
     private final TokenProvider tokenProvider;
-    public TokenDTO getJwtToken(KakaoAuthResponseDTO kakaoAuth, KakaoAuthInfoDTO authUserInfo) {
-        return isRegisteredMember(authUserInfo.getId())
-                ? reissueToken()
-                : issueJwtToken(kakaoAuth, authUserInfo);
-    }
 
-    private Boolean isRegisteredMember(Long KakaoId) {
-        return false;
-    }
+    public TokenDTO issueJwtToken(Long gettoIdx, String oauthOrganization, String oauthMemberId) {
 
-    private TokenDTO issueJwtToken(KakaoAuthResponseDTO kakaoAuth, KakaoAuthInfoDTO authUserInfo) {
+
+//        jwtRepository.save(LoginToken.builder().refreshToken("").memberIdx(member.getIdx()).build());
+
+
         Collection<? extends GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("USER"));
-        User securityUser = new User(authUserInfo.getId().toString(), "", authorities );
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(securityUser, kakaoAuth.getAccessToken(), authorities);
-        return tokenProvider.createTokenByKakao(authenticationToken, kakaoAuth.getAccessToken(), kakaoAuth.getRefreshToken());
+        User securityUser = new User(gettoIdx.toString(), "", authorities );
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(securityUser, "", authorities);
+
+
+        return tokenProvider.generateLoginToken(authenticationToken, oauthOrganization, oauthMemberId);
     }
 
-    private TokenDTO reissueToken() {
-        return new TokenDTO();
-
+    public TokenDTO reissueToken(Long gettoIdx, String oauthOrganization, String oauthMemberId) {
+        return this.issueJwtToken(gettoIdx,oauthOrganization,oauthMemberId);
     }
 
 

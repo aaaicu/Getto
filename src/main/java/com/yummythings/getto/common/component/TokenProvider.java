@@ -44,24 +44,23 @@ public class TokenProvider implements InitializingBean {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public TokenDTO createTokenByKakao(Authentication authentication,String kakaoAccessToken, String kakaoRefreshToken) {
+    public TokenDTO generateLoginToken(Authentication authentication, String oauthOrganization, String oauthMemberId) {
         return TokenDTO.builder()
-                .accessToken(createKakaoAccessToken(authentication, kakaoAccessToken))
-                .refreshToken(createKakaoRefreshToken(authentication, kakaoRefreshToken))
+                .accessToken(createAccessToken(authentication, oauthOrganization, oauthMemberId ))
+                .refreshToken(createRefreshToken(authentication, oauthOrganization))
                 .build();
     }
 
-    private String createKakaoAccessToken(Authentication authentication, String kakaoAccessToken) {
+    private String createAccessToken(Authentication authentication, String oauthOrganization, String oauthMemberId) {
         return this.createToken(authentication,
-                Map.of( "auth_organization", "KAKAO",
-                        "access_token", kakaoAccessToken),
+                Map.of( "oauth_organization", oauthOrganization,
+                        "oauth_member_id", oauthMemberId),
                 accessTokenExpirationMilliseconds);
     }
 
-    private String createKakaoRefreshToken(Authentication authentication, String kakaoRefreshToken) {
+    private String createRefreshToken(Authentication authentication, String oauthOrganization) {
         return this.createToken(authentication,
-                Map.of( "auth_organization", "KAKAO",
-                        "refresh_token", kakaoRefreshToken),
+                Map.of( "oauth_organization", oauthOrganization),
                 refreshTokenExpirationMilliseconds);
     }
 

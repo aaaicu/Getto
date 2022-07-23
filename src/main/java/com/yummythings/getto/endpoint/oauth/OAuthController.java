@@ -1,11 +1,8 @@
 package com.yummythings.getto.endpoint.oauth;
 
-import com.yummythings.getto.dto.LoginResponseDTO;
-import com.yummythings.getto.dto.TokenDTO;
-import com.yummythings.getto.service.JwtService;
-import com.yummythings.getto.service.UserAuthService;
-import com.yummythings.getto.service.dto.KakaoAuthInfoDTO;
-import com.yummythings.getto.service.dto.KakaoAuthResponseDTO;
+import com.yummythings.getto.dto.LoginDTO;
+import com.yummythings.getto.endpoint.oauth.facade.OAuthFacade;
+import com.yummythings.getto.endpoint.oauth.response.LoginResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseCookie;
@@ -20,39 +17,23 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/oauth")
 public class OAuthController {
 
-    private final UserAuthService userAuthService;
-    private final JwtService jwtService;
+    private final OAuthFacade oAuthFacade;
 
     @ResponseBody
     @GetMapping("/kakao")
-    public ResponseEntity<LoginResponseDTO> kakaoLoginCallback(@RequestParam String code, HttpServletResponse response) {
+    public ResponseEntity<LoginResponseDTO> getLoginTokenByKakao(@RequestParam String code, HttpServletResponse response) {
 
-        // 넘어온 인가 코드로 access_token 발급
-        KakaoAuthResponseDTO kakaoAuth = userAuthService.getAuthResponse(code);
+        LoginDTO loginDTO = oAuthFacade.generateLoginDTO(code);
+        response.setHeader("Set-Cookie", createRefreshTokenCookie(loginDTO.getLoginToken().getRefreshToken()));
 
-        // 인증 사용자 정보
-        KakaoAuthInfoDTO authUserInfo = userAuthService.getAuthUserInfo(kakaoAuth.getAccessToken());
-        TokenDTO jwtToken = jwtService.getJwtToken(kakaoAuth, authUserInfo);
-
-        LoginResponseDTO loginResponseDTO = createLoginResponseDTO(authUserInfo, jwtToken);
-        response.setHeader("Set-Cookie", createRefreshTokenCookie(jwtToken.getRefreshToken()));
-
-        log.debug("authUserInfo = " + authUserInfo);
-
-        return ResponseEntity.ok(loginResponseDTO);
-    }
-
-    private LoginResponseDTO createLoginResponseDTO(KakaoAuthInfoDTO authUserInfo, TokenDTO jwtToken) {
-        return LoginResponseDTO.builder()
-                .accessToken(jwtToken.getAccessToken())
-                .nickname(authUserInfo.getKakaoAccount().getProfile().getNickname())
-                .thumbnailImageUrl(authUserInfo.getKakaoAccount().getProfile().getProfileImageUrl())
-                .build();
+        return ResponseEntity.ok(LoginDTO.extract(loginDTO));
     }
 
     private String createRefreshTokenCookie(String refreshToken) {
+        final int twoWeeks = 14 * 24 * 60 * 60;
+
         ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
-                .maxAge(14 * 24 * 60 * 60)
+                .maxAge(twoWeeks)
                 .path("/")
                 .secure(true)
                 .sameSite("None")

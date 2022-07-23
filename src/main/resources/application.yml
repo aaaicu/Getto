@@ -8,9 +8,9 @@ spring:
     password: ENC(vL2XAsX7VVd6zPvsPJhPFmqYOzAE5jW6)
 
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.Oracle12cDialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true

@@ -1,9 +1,7 @@
 package com.yummythings.getto.dto;
 
+import com.yummythings.getto.endpoint.oauth.response.LoginResponseDTO;
 import lombok.*;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -11,12 +9,16 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginDTO {
+    private TokenDTO loginToken;
+    private String nickname;
+    private String thumbnailImageUrl;
 
-    @NotNull
-    @Size(min = 3, max = 50)
-    private String username;
+    public static LoginResponseDTO extract(LoginDTO loginDTO) {
+        return LoginResponseDTO.builder()
+                .accessToken(loginDTO.getLoginToken().getAccessToken())
+                .nickname(loginDTO.nickname)
+                .thumbnailImageUrl(loginDTO.thumbnailImageUrl)
+                .build();
+    }
 
-    @NotNull
-    @Size(min = 3, max = 100)
-    private String password;
 }
