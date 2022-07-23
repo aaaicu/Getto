@@ -73,7 +73,7 @@ public class KakaoAuthInfoDTO {
                 .ageRangeMin(kakaoAuthInfoDTO.getKakaoAccount().getAgeRange().getMinimum())
                 .ageRangeMax(kakaoAuthInfoDTO.getKakaoAccount().getAgeRange().getMaximum())
                 .nickName(kakaoAuthInfoDTO.getProfile().getNickname())
-                .thumbnailImageUrl(kakaoAuthInfoDTO.getProfile().getThumbnailImageUrl())
+                .thumbnailImageUrl(kakaoAuthInfoDTO.getProfile().getProfileImageUrl())
                 .build();
     }
 
