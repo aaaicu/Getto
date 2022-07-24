@@ -22,11 +22,9 @@ public class LoginToken {
     @Column(name = "refresh_token", length = 1000)
     private String refreshToken;
 
-    @Column(name = "member_idx")
-    private Long memberIdx;
-
-    @Column(name = "isExpired")
-    private Boolean isExpired;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_idx")
+    private GettoMember gettoMember;
 
     @Column(name = "created_at")
     private LocalDateTime created_at;

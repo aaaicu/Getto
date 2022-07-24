@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GettoMemberRepository extends JpaRepository<GettoMember, Long> {
 
-    GettoMember findAllByOauthOrganizationAndOauthMemberIdx(String oauthOrganization, Long oauthMemberIdx);
+    GettoMember findAllByOauthMemberIdx(Long oauthMemberIdx);
 
 
 }

@@ -29,31 +29,31 @@ public class OAuthFacade {
         KakaoAuthInfoDTO authUserInfo = this.userAuthService.getAuthUserInfo(kakaoAuth.getAccessToken());
 
         return gettoMemberService.isRegisteredMember(KakaoAuthInfoDTO.extract(authUserInfo).getKakaoId())
-                ? reissue(authUserInfo)
+                ? signIn(authUserInfo)
                 : signUp(authUserInfo);
     }
 
-    private TokenDTO reissue(KakaoAuthInfoDTO authInfoDTO) {
+    private TokenDTO signIn(KakaoAuthInfoDTO authInfoDTO) {
         KakaoMemberInfo kaKaoMemberInfo = kakaoMemberInfoService.findKaKaoMemberInfo(authInfoDTO.getId());
-        GettoMember gettoMember = gettoMemberService.findGettoMember("KAKAO", kaKaoMemberInfo.getIdx());
+        GettoMember gettoMember = gettoMemberService.findGettoMember( kaKaoMemberInfo.getIdx());
 
-
-        return jwtService.reissueToken(gettoMember.getIdx(),"KAKAO", kaKaoMemberInfo.getKakaoId());
+        return jwtService.updateRefreshToken(gettoMember.getIdx(),"KAKAO", kaKaoMemberInfo.getKakaoId());
     }
 
     private TokenDTO signUp(KakaoAuthInfoDTO authInfoDTO) {
 
-        KakaoMemberInfo kakaoMemberInfo = kakaoMemberInfoService.saveKakaoMember(KakaoAuthInfoDTO.extract(authInfoDTO));
-        GettoMember gettoMember = createGettoMember(kakaoMemberInfo);
+        GettoMember member = gettoMemberService.saveMember(createGettoMember());
+        KakaoMemberInfo memberInfo = KakaoAuthInfoDTO.extract(authInfoDTO);
+        memberInfo.setGettoMember(member);
+        kakaoMemberInfoService.saveKakaoMember(memberInfo);
 
-        GettoMember member = gettoMemberService.saveMember(gettoMember);
         return jwtService.issueJwtToken(member.getIdx(), "KAKAO", authInfoDTO.getId());
     }
 
-    private GettoMember createGettoMember(KakaoMemberInfo kakaoMemberInfo) {
+    private GettoMember createGettoMember() {
         return GettoMember.builder()
-                .oauthOrganization("KAKAO")
-                .oauthMember(kakaoMemberInfo)
+//                .oauthOrganization("KAKAO")
+//                .oauthMember(kakaoMemberInfo)
                 .isActivate(true)
                 .build();
     }

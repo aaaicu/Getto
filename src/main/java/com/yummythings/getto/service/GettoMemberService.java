@@ -31,8 +31,8 @@ public class GettoMemberService {
         return gettoMemberRepository.save(gettoMember);
     }
 
-    public GettoMember findGettoMember(String oauthOrganization, Long oauthMemberIdx) {
-        return gettoMemberRepository.findAllByOauthOrganizationAndOauthMemberIdx(oauthOrganization, oauthMemberIdx);
+    public GettoMember findGettoMember( Long oauthMemberIdx) {
+        return gettoMemberRepository.findAllByOauthMemberIdx(oauthMemberIdx);
 
     }
 }

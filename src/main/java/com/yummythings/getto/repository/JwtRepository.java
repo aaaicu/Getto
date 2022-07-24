@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 public interface JwtRepository extends JpaRepository<LoginToken, Long> {
+    void deleteLoginTokensByGettoMemberIdx(Long memberIdx);
 }
