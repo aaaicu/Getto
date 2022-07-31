@@ -17,6 +17,10 @@ public class KakaoMemberInfoService {
     public KakaoMemberInfo findKaKaoMemberInfo(String kakaoId) {
         return kakaoMemberInfoRepository.findOneKakaoMemberInfoByKakaoId(kakaoId);
     }
+
+    public KakaoMemberInfo findKaKaoMemberInfo(Long gettoIdx) {
+        return kakaoMemberInfoRepository.findOneKakaoMemberInfoByGettoMemberIdx(gettoIdx);
+    }
     public KakaoMemberInfo saveKakaoMember(KakaoMemberInfo info) {
         return kakaoMemberInfoRepository.save(info);
     }

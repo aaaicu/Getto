@@ -34,6 +34,6 @@ public class KakaoMemberInfo {
     private String thumbnailImageUrl;
 
     @ManyToOne
-    @JoinColumn(name = "oauth_member_idx")
+    @JoinColumn(name = "getto_member_idx")
     private GettoMember gettoMember;
 }

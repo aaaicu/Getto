@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -43,5 +44,7 @@ public class JwtService {
         return this.issueJwtToken(gettoIdx,oauthOrganization,oauthMemberId);
     }
 
-
+    public Optional<LoginToken> findByRefreshToken(String reissueToken) {
+        return jwtRepository.findByRefreshToken(reissueToken);
+    }
 }

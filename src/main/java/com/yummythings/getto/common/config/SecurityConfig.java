@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-                .antMatchers("/h2-console/**", "/favicon.ico", "/error");
+                .antMatchers("/h2-console/**", "/favicon.ico", "/error", "/callback/**");
     }
 
     @Override
@@ -56,9 +56,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-//                .and()
-//                .authorizeRequests()
-//                .antMatchers("/").permitAll() // 인가 허용 대상 패턴
+                .and()
+                .authorizeRequests()
+                .antMatchers("/").permitAll() // 인가 허용 대상 패턴
+//                .antMatchers("/").authenticated() // 인가 허용 대상 패턴
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider))
         ;

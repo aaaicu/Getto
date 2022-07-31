@@ -18,6 +18,9 @@ import java.security.Key;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.yummythings.getto.common.constant.AccessTokenClaim.OAUTH_MEMBER_ID;
+import static com.yummythings.getto.common.constant.AccessTokenClaim.OAUTH_ORGANIZATION;
+
 @Component
 @Slf4j
 public class TokenProvider implements InitializingBean {
@@ -53,14 +56,14 @@ public class TokenProvider implements InitializingBean {
 
     private String createAccessToken(Authentication authentication, String oauthOrganization, String oauthMemberId) {
         return this.createToken(authentication,
-                Map.of( "oauth_organization", oauthOrganization,
-                        "oauth_member_id", oauthMemberId),
+                Map.of( OAUTH_ORGANIZATION, oauthOrganization,
+                        OAUTH_MEMBER_ID, oauthMemberId),
                 accessTokenExpirationMilliseconds);
     }
 
     private String createRefreshToken(Authentication authentication, String oauthOrganization) {
         return this.createToken(authentication,
-                Map.of( "oauth_organization", oauthOrganization),
+                Map.of( OAUTH_ORGANIZATION, oauthOrganization),
                 refreshTokenExpirationMilliseconds);
     }
 
@@ -94,27 +97,35 @@ public class TokenProvider implements InitializingBean {
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
 
-    private List<SimpleGrantedAuthority> parsingAuthorities(Claims claims) {
+    public Claims parseToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+        private List<SimpleGrantedAuthority> parsingAuthorities(Claims claims) {
         return Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
 
     public boolean validateToken(String token) {
-        if (token == null) {
-            return false;
-        }
-
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             log.info("잘못된 JWT 서명입니다.");
+            throw e;
         } catch (ExpiredJwtException e) {
             log.info("만료된 JWT 토큰입니다.");
+            throw e;
         } catch (UnsupportedJwtException e) {
             log.info("지원되지 않는 JWT 토큰입니다.");
+            throw e;
         } catch (IllegalArgumentException e) {
             log.info("JWT 토큰이 잘못되었습니다.");
+            throw e;
         }
         return true;
     }

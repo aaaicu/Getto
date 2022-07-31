@@ -9,4 +9,6 @@ import java.util.List;
 public interface KakaoMemberInfoRepository extends JpaRepository<KakaoMemberInfo, Long> {
     List<KakaoMemberInfo> findFirstKakaoMemberInfoByKakaoId(String kakaoId);
     KakaoMemberInfo findOneKakaoMemberInfoByKakaoId(String kakaoId);
+
+    KakaoMemberInfo findOneKakaoMemberInfoByGettoMemberIdx(Long gettoIdx);
 }
