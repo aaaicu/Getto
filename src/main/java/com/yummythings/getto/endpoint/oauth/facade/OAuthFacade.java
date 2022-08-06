@@ -25,8 +25,7 @@ public class OAuthFacade {
     private final KakaoMemberInfoService kakaoMemberInfoService;
 
 
-    public TokenDTO getGettoLoginToken(KakaoAuthResponseDTO kakaoAuth) {
-        KakaoAuthInfoDTO authUserInfo = this.userAuthService.getAuthUserInfo(kakaoAuth.getAccessToken());
+    public TokenDTO getGettoLoginToken(KakaoAuthResponseDTO kakaoAuth,KakaoAuthInfoDTO authUserInfo) {
 
         return gettoMemberService.isRegisteredMember(KakaoAuthInfoDTO.extract(authUserInfo).getKakaoId())
                 ? signIn(authUserInfo)
@@ -61,8 +60,9 @@ public class OAuthFacade {
     public LoginDTO generateLoginDTO(String code) {
         KakaoAuthResponseDTO kakaoAuth = userAuthService.getAuthResponse(code);
         KakaoAuthInfoDTO authUserInfo = this.userAuthService.getAuthUserInfo(kakaoAuth.getAccessToken());
+        System.out.println("authUserInfo = " + authUserInfo);
 
-        TokenDTO gettoLoginToken = this.getGettoLoginToken(kakaoAuth);
+        TokenDTO gettoLoginToken = this.getGettoLoginToken(kakaoAuth, authUserInfo);
         KakaoMemberInfo userInfo = this.kakaoMemberInfoService.findKaKaoMemberInfo(authUserInfo.getId());
 
         return LoginDTO.builder()

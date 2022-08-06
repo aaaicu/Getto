@@ -45,6 +45,6 @@ public class JwtService {
     }
 
     public Optional<LoginToken> findByRefreshToken(String reissueToken) {
-        return jwtRepository.findByRefreshToken(reissueToken);
+        return jwtRepository.findByRefreshTokenJoinMember(reissueToken);
     }
 }

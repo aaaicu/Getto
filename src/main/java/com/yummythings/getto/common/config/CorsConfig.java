@@ -10,7 +10,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @RequiredArgsConstructor
-public class corsConfig {
+public class CorsConfig {
 
     private final FrontInfoProperty frontInfoProperty;
 

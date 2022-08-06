@@ -17,8 +17,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
-import static com.yummythings.getto.common.constant.AccessTokenClaim.OAUTH_MEMBER_ID;
-import static com.yummythings.getto.common.constant.AccessTokenClaim.OAUTH_ORGANIZATION;
+import static com.yummythings.getto.common.constant.RefreshTokenClaim.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -31,35 +30,37 @@ public class AuthFacade {
     private final CookieUtil cookieUtil;
 
     public LoginResponseDTO reissueToken(String reissueToken, String accessToken, HttpServletResponse response) {
+        if (reissueToken == null || reissueToken.isBlank()) {
+            throw new JwtException("refresh token  없음");
+        }
 
         Optional<LoginToken> loginToken = jwtService.findByRefreshToken(reissueToken);
         if (tokenValidate(reissueToken, accessToken) && loginToken.isPresent()) {
 
-            TokenDTO tokenDTO = updateRefreshTokenByAccessToken(accessToken, loginToken.get().getGettoMember().getIdx());
-
-            response.setHeader( "Set-Cookie", cookieUtil.createRefreshTokenCookie(tokenDTO.getRefreshToken()));
-
-            return getLoginResponseDTO(loginToken.get().getGettoMember().getIdx(), tokenDTO.getAccessToken());
+            TokenDTO tokenDTO = updateRefreshTokenByAccessToken(reissueToken, loginToken.get().getGettoMember().getIdx());
+            LoginResponseDTO loginResponseDTO = getLoginResponseDTO(loginToken.get().getGettoMember().getIdx(), tokenDTO.getAccessToken(), tokenDTO.getRefreshToken());
+            return loginResponseDTO;
         }
 
         throw new JwtException("토큰 재발급 실패");
     }
 
-    private LoginResponseDTO getLoginResponseDTO(Long gettoIdx, String accessToken) {
+    private LoginResponseDTO getLoginResponseDTO(Long gettoIdx, String accessToken, String refreshToken) {
         KakaoMemberInfo kaKaoMemberInfo = kakaoMemberInfoService.findKaKaoMemberInfo(gettoIdx);
         return LoginResponseDTO.builder().accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .thumbnailImageUrl(kaKaoMemberInfo.getThumbnailImageUrl())
                 .nickname(kaKaoMemberInfo.getNickName()).build();
     }
 
-    private TokenDTO updateRefreshTokenByAccessToken(String accessToken, Long gettoIdx) {
-        Claims claims = tokenProvider.parseToken(accessToken);
-        return jwtService.updateRefreshToken(gettoIdx, (String) claims.get(OAUTH_ORGANIZATION), (String) claims.get(OAUTH_MEMBER_ID));
+    private TokenDTO updateRefreshTokenByAccessToken(String reissueToken, Long gettoIdx) {
+        Claims claims = tokenProvider.parseToken(reissueToken);
+        return jwtService.updateRefreshToken(gettoIdx, (String) claims.get(OAUTH_ORGANIZATION), (String) claims.get(SUBJECT));
     }
 
     private boolean tokenValidate(String reissueToken, String accessToken) {
-        return tokenProvider.validateToken(reissueToken) &&
-                tokenProvider.validateToken(accessToken);
+        return tokenProvider.validateToken(reissueToken);
+//                && tokenProvider.validateToken(accessToken);
     }
 
 }

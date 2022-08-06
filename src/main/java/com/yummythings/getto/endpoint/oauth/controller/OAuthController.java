@@ -21,15 +21,10 @@ import java.io.IOException;
 public class OAuthController {
 
     private final OAuthFacade oAuthFacade;
-    private final CookieUtil cookieUtil;
 
     @ResponseBody
     @GetMapping("/kakao")
     public ResponseEntity<LoginResponseDTO> getLoginTokenByKakao(@RequestParam String code, HttpServletResponse response) throws IOException {
-
-        LoginDTO loginDTO = oAuthFacade.generateLoginDTO(code);
-        response.setHeader( "Set-Cookie", cookieUtil.createRefreshTokenCookie(loginDTO.getLoginToken().getRefreshToken()));
-
-        return ResponseEntity.ok(LoginDTO.extract(loginDTO));
+        return ResponseEntity.ok(LoginDTO.extract(oAuthFacade.generateLoginDTO(code)));
     }
 }

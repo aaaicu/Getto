@@ -22,10 +22,11 @@ public class AuthController {
 
     @GetMapping("/reissue")
     public ResponseEntity<LoginResponseDTO> reissueAccessToken(
-            @CookieValue(value = "refreshToken", required = false) String refreshToken,
-            @RequestHeader("Authorization") String accessToken,
+            @RequestParam(required = false) String refreshToken,
+            @RequestHeader(value = "Authorization", required = false) String accessToken,
             HttpServletResponse response) {
-        return ResponseEntity.ok(authFacade.reissueToken(refreshToken, accessToken, response));
+        LoginResponseDTO loginResponseDTO = authFacade.reissueToken(refreshToken, accessToken, response);
+        return ResponseEntity.ok(loginResponseDTO);
     }
 
     @GetMapping

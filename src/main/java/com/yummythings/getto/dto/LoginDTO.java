@@ -16,6 +16,7 @@ public class LoginDTO {
     public static LoginResponseDTO extract(LoginDTO loginDTO) {
         return LoginResponseDTO.builder()
                 .accessToken(loginDTO.getLoginToken().getAccessToken())
+                .refreshToken(loginDTO.getLoginToken().getRefreshToken())
                 .nickname(loginDTO.nickname)
                 .thumbnailImageUrl(loginDTO.thumbnailImageUrl)
                 .build();

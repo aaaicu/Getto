@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
-
 import javax.servlet.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -24,18 +23,14 @@ public class JwtFilter extends GenericFilter {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
     private final TokenProvider tokenProvider;
-    private static final List<String> exceptUrls = List.of("/oauth/kakao");
+    private static final List<String> exceptUrls = List.of("/oauth/kakao","/auth/reissue");
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse res = (HttpServletResponse) response;
         HttpServletRequest req = (HttpServletRequest) request;
 
-
         String requestURI = req.getRequestURI();
-        log.info(req.getHeader(AUTHORIZATION_HEADER));
-        log.info(requestURI);
-        log.info(res.getHeader("refreshToken"));
 
         try {
             if (!exceptUrls.contains(requestURI)) {
@@ -43,7 +38,7 @@ public class JwtFilter extends GenericFilter {
                 if (tokenProvider.validateToken(accessToken))
                     saveAuthentication(accessToken);
             }
-            chain.doFilter(request, res);
+            chain.doFilter(req, res);
         } catch (Exception e) {
             res.sendError(HttpServletResponse.SC_FORBIDDEN, e.getMessage());
         }
