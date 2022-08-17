@@ -1,13 +1,9 @@
 package com.yummythings.getto.endpoint.auth.controller;
 
-import com.yummythings.getto.common.annotation.AuthCheck;
-import com.yummythings.getto.dto.LoginDTO;
-import com.yummythings.getto.dto.TokenDTO;
 import com.yummythings.getto.endpoint.auth.facade.AuthFacade;
 import com.yummythings.getto.endpoint.oauth.response.LoginResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +26,6 @@ public class AuthController {
         return ResponseEntity.ok(loginResponseDTO);
     }
 
-    @AuthCheck
     @GetMapping
     public ResponseEntity<String> testAuth( @CookieValue("refreshToken") String refreshToken) {
         System.out.println("refreshToken = " + refreshToken);

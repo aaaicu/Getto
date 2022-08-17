@@ -22,7 +22,7 @@ public class CustomWebMvcConfigurer implements WebMvcConfigurer {
     private final AutCheckInterceptor checkInterceptor;
 
     public void addInterceptors(InterceptorRegistry registry){
-        registry.addInterceptor(checkInterceptor).addPathPatterns("/**");
+        registry.addInterceptor(checkInterceptor).addPathPatterns("/api/**");
     }
 
     @Override
