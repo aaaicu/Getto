@@ -129,4 +129,8 @@ public class TokenProvider implements InitializingBean {
         }
         return true;
     }
+
+    public String getSubject(String token) {
+        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
+    }
 }

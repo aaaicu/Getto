@@ -1,6 +1,5 @@
 package com.yummythings.getto.endpoint.auth.facade;
 
-import com.yummythings.getto.common.component.CookieUtil;
 import com.yummythings.getto.common.component.TokenProvider;
 import com.yummythings.getto.domain.KakaoMemberInfo;
 import com.yummythings.getto.domain.LoginToken;
@@ -17,7 +16,8 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
-import static com.yummythings.getto.common.constant.RefreshTokenClaim.*;
+import static com.yummythings.getto.common.constant.RefreshTokenClaim.OAUTH_ORGANIZATION;
+import static com.yummythings.getto.common.constant.RefreshTokenClaim.SUBJECT;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -27,7 +27,6 @@ public class AuthFacade {
     private final TokenProvider tokenProvider;
     private final JwtService jwtService;
     private final KakaoMemberInfoService kakaoMemberInfoService;
-    private final CookieUtil cookieUtil;
 
     public LoginResponseDTO reissueToken(String reissueToken, String accessToken, HttpServletResponse response) {
         if (reissueToken == null || reissueToken.isBlank()) {
@@ -38,8 +37,7 @@ public class AuthFacade {
         if (tokenValidate(reissueToken, accessToken) && loginToken.isPresent()) {
 
             TokenDTO tokenDTO = updateRefreshTokenByAccessToken(reissueToken, loginToken.get().getGettoMember().getIdx());
-            LoginResponseDTO loginResponseDTO = getLoginResponseDTO(loginToken.get().getGettoMember().getIdx(), tokenDTO.getAccessToken(), tokenDTO.getRefreshToken());
-            return loginResponseDTO;
+            return getLoginResponseDTO(loginToken.get().getGettoMember().getIdx(), tokenDTO.getAccessToken(), tokenDTO.getRefreshToken());
         }
 
         throw new JwtException("토큰 재발급 실패");

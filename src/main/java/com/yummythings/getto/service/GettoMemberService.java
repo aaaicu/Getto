@@ -18,7 +18,6 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 public class GettoMemberService {
-    private final TokenProvider tokenProvider;
     private final GettoMemberRepository gettoMemberRepository;
     private final KakaoMemberInfoRepository kakaoMemberInfoRepository;
 

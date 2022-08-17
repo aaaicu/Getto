@@ -1,6 +1,7 @@
 package com.yummythings.getto.service;
 
 import com.yummythings.getto.domain.Member;
+import com.yummythings.getto.repository.GettoMemberRepository;
 import com.yummythings.getto.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,6 +25,12 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .map(member -> createUser(username, member))
                 .orElseThrow(() -> new UsernameNotFoundException(username + " -> 데이터베이스에서 찾을 수 없습니다."));
     }
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        return userRepository.findOneWithAuthoritiesByUsername(username)
+//                .map(member -> createUser(username, member))
+//                .orElseThrow(() -> new UsernameNotFoundException(username + " -> 데이터베이스에서 찾을 수 없습니다."));
+//    }
 
     private org.springframework.security.core.userdetails.User createUser(String username, Member member) {
         if (!member.isActivated()) {

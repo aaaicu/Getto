@@ -1,5 +1,6 @@
 package com.yummythings.getto.endpoint.auth.controller;
 
+import com.yummythings.getto.common.annotation.AuthCheck;
 import com.yummythings.getto.dto.LoginDTO;
 import com.yummythings.getto.dto.TokenDTO;
 import com.yummythings.getto.endpoint.auth.facade.AuthFacade;
@@ -29,6 +30,7 @@ public class AuthController {
         return ResponseEntity.ok(loginResponseDTO);
     }
 
+    @AuthCheck
     @GetMapping
     public ResponseEntity<String> testAuth( @CookieValue("refreshToken") String refreshToken) {
         System.out.println("refreshToken = " + refreshToken);
