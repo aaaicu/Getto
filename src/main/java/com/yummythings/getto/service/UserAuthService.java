@@ -35,10 +35,6 @@ public class UserAuthService {
                 KakaoAuthResponseDTO.class).getBody();
     }
 
-    public void saveAuthRefreshToken(String refreshToken, int refreshTokenExpiresIn) {
-        log.info("리프래시 토큰 저장할 거임");
-    }
-
     /**
      * 인증 사용자 정보 요청
      *
