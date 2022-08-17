@@ -23,4 +23,11 @@ public class LottoApi3rdController {
         return lottoApi3rdFacade.lastLuckyNumber(roundNumber).toString();
     }
 
+
+    @GetMapping("/last/lucky-number/refresh")
+    public void refreshCachedLottoNumber() {
+        lottoApi3rdFacade.refreshCachedLottoNumber();
+    }
+
+
 }

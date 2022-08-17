@@ -14,8 +14,11 @@ public class LottoApi3rdFacade {
     private final LottoApi3rdService lottoApi3rdService;
 
     public LottoNumberData lastLuckyNumber(Integer roundNumber) {
-
         return lottoApi3rdService.lastLuckyNumber(roundNumber);
+    }
+
+    public void refreshCachedLottoNumber() {
+        lottoApi3rdService.refreshCachedLottoNumber();
     }
 
 }

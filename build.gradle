@@ -38,6 +38,10 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
 	implementation 'org.apache.httpcomponents:httpclient:4.5.13'
 
+	//eh-cache
+	implementation 'org.springframework.boot:spring-boot-starter-cache'
+	implementation 'net.sf.ehcache:ehcache:2.10.9.2'
+
 
 	//오라클 DB 지갑 접속
 	implementation 'com.oracle.database.security:osdt_cert:21.5.0.0'

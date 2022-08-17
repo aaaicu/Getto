@@ -15,6 +15,12 @@ spring:
 #    console:
 #      enabled: true
 
+###### EH CACHE
+  cache:
+    ehcache:
+      config: classpath:ehcache.xml
+
+
   jpa:
 #    database-platform: org.hibernate.dialect.H2Dialect
     database-platform: org.hibernate.dialect.Oracle12cDialect

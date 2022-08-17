@@ -6,6 +6,8 @@ import com.yummythings.getto.service.dto.LottoNumberData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.entity.ContentType;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -23,6 +25,8 @@ public class LottoApi3rdService {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
+
+    @Cacheable(value = "findLottoCache")
     public LottoNumberData lastLuckyNumber(Integer roundNumber){
 
         String url = BASE_URL + "&drwNo=" + roundNumber;
@@ -38,5 +42,9 @@ public class LottoApi3rdService {
             e.printStackTrace();
         }
         return new LottoNumberData();
+    }
+
+    @CacheEvict(value = "findLottoCache", allEntries = true)
+    public void refreshCachedLottoNumber() {
     }
 }
