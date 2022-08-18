@@ -4,7 +4,6 @@ import com.yummythings.getto.endpoint.lotto.facade.LottoApi3rdFacade;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,16 +16,16 @@ public class LottoApi3rdController {
 
     private final LottoApi3rdFacade lottoApi3rdFacade;
 
-    @GetMapping("/last/lucky-number/{roundNumber}")
-    public String lastLuckyNumber( @PathVariable Integer roundNumber) {
+    @GetMapping("/last/lucky-number")
+    public String lastLuckyNumber() {
 
-        return lottoApi3rdFacade.lastLuckyNumber(roundNumber).toString();
+        return lottoApi3rdFacade.getLastLuckyNumber().toString();
     }
 
 
     @GetMapping("/last/lucky-number/refresh")
-    public void refreshCachedLottoNumber() {
-        lottoApi3rdFacade.refreshCachedLottoNumber();
+    public void refreshCachedLuckyNumber() {
+        lottoApi3rdFacade.refreshCachedLuckyNumber();
     }
 
 

@@ -57,8 +57,7 @@ public class AuthFacade {
     }
 
     private boolean tokenValidate(String reissueToken, String accessToken) {
-        boolean a = tokenProvider.validateToken(reissueToken);
-        return a;
+        return tokenProvider.validateToken(reissueToken);
 //                && tokenProvider.validateToken(accessToken);
     }
 
