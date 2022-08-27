@@ -1,6 +1,7 @@
 package com.yummythings.getto.endpoint.lotto.controller;
 
 import com.yummythings.getto.domain.LuckyNumber;
+import com.yummythings.getto.endpoint.lotto.data.resposne.LuckyNumberResponse;
 import com.yummythings.getto.endpoint.lotto.facade.LottoApi3rdFacade;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +20,7 @@ public class LottoApi3rdController {
     private final LottoApi3rdFacade lottoApi3rdFacade;
 
     @GetMapping("/last/lucky-number")
-    public ResponseEntity<LuckyNumber> lastLuckyNumber() {
+    public ResponseEntity<LuckyNumberResponse> lastLuckyNumber() {
         return ResponseEntity.ok(lottoApi3rdFacade.getLastLuckyNumber());
     }
 

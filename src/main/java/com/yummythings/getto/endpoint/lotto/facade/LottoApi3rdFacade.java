@@ -1,6 +1,8 @@
 package com.yummythings.getto.endpoint.lotto.facade;
 
+import com.yummythings.getto.common.component.LocalDateUtil;
 import com.yummythings.getto.domain.LuckyNumber;
+import com.yummythings.getto.endpoint.lotto.data.resposne.LuckyNumberResponse;
 import com.yummythings.getto.service.LottoApi3rdService;
 import com.yummythings.getto.service.LuckyNumberService;
 import com.yummythings.getto.service.dto.LuckyNumberData;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+
 @Slf4j
 @Transactional
 @Component
@@ -22,8 +25,19 @@ public class LottoApi3rdFacade {
     private final LottoApi3rdService lottoApi3rdService;
     private final LuckyNumberService luckyNumberService;
 
-    public LuckyNumber getLastLuckyNumber() {
-        return luckyNumberService.findLastLuckyNumber().orElse(new LuckyNumber());
+    public LuckyNumberResponse getLastLuckyNumber() {
+        LuckyNumber luckyNumber = luckyNumberService.findLastLuckyNumber().orElse(new LuckyNumber());
+        return LuckyNumberResponse.builder()
+                .round(luckyNumber.getRound())
+                .number1(luckyNumber.getNumber1())
+                .number2(luckyNumber.getNumber2())
+                .number3(luckyNumber.getNumber3())
+                .number4(luckyNumber.getNumber4())
+                .number5(luckyNumber.getNumber5())
+                .number6(luckyNumber.getNumber6())
+                .bonus(luckyNumber.getBonus())
+                .createdAt(LocalDateUtil.LocalDateTimeToKorString(luckyNumber.getCreatedAt()))
+                .build();
     }
 
     public void refreshCachedLuckyNumber() {

@@ -45,5 +45,5 @@ public class LuckyNumber implements Serializable {
     private Integer bonus;
 
     @Column(name = "created_at")
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 }
