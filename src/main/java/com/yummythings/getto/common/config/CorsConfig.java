@@ -20,7 +20,7 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.addAllowedOriginPattern(frontInfoProperty.getHostUrl());
-        config.addAllowedOriginPattern("https://*.yummy-things.xyz");
+        config.addAllowedOriginPattern("https://yummy-things.xyz");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         config.addExposedHeader("Authorization");
