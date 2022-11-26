@@ -6,7 +6,7 @@ COPY gradle gradle
 COPY build.gradle .
 COPY settings.gradle .
 COPY src src
-COPY Wallet_GettoDB Wallet_GettoDB
+COPY Wallet_YummyThings Wallet_YummyThings
 
 # Spring Boot 프로젝트 내의 gradle 설정 파일과 소스코드를 이미지로 가져옵니다.
 
@@ -15,7 +15,7 @@ RUN ./gradlew bootjar
 
 FROM openjdk:17
 COPY --from=builder build/libs/*.jar /getto.jar
-COPY --from=builder Wallet_GettoDB /Wallet_GettoDB
+COPY --from=builder Wallet_YummyThings /Wallet_YummyThings
 
 EXPOSE 9099
 ENV ENC_KEY=1018
